@@ -4,9 +4,9 @@ pub mod models;
 pub mod schema;
 
 use crate::database::DbConnector;
+use crate::models::Interface;
 use crate::models::Traffic;
-use mikrotik_api::{Authenticated, MikrotikAPI, connect};
-use serde::Deserialize;
+use mikrotik_api::{connect, Authenticated, MikrotikAPI};
 use std::time::Duration;
 
 #[tokio::main]
@@ -41,11 +41,4 @@ async fn get_peers_traffic(api: &mut MikrotikAPI<Authenticated>) {
         };
         db.insert_or_update_traffic(peer);
     }
-}
-
-#[derive(Debug, Deserialize)]
-struct Interface {
-    pub name: String,
-    pub rx: String,
-    pub tx: String,
 }
