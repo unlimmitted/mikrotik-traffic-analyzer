@@ -2,10 +2,12 @@ mod database;
 mod migration;
 pub mod models;
 pub mod schema;
+mod websocket;
 
 use crate::database::DbConnector;
 use crate::models::Interface;
 use crate::models::Traffic;
+use crate::websocket::init_websocket;
 use mikrotik_api::{connect, Authenticated, MikrotikAPI};
 use std::time::Duration;
 
@@ -14,6 +16,8 @@ async fn main() {
     let password = std::env::var("password").expect("Не задана переменная окружения password");
     let user = std::env::var("user").expect("Не задана переменная окружения user");
     let gateway = std::env::var("gateway").expect("Не задана переменная окружения gateway");
+
+    init_websocket().await;
 
     let disconnected = connect((gateway.as_str(), 8728)).await.unwrap();
     let mut api = disconnected
