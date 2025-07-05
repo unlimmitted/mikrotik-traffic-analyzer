@@ -7,7 +7,7 @@ use tokio_tungstenite::accept_async;
 use tokio_tungstenite::tungstenite::Message;
 
 pub async fn init_websocket() {
-    let addr = "127.0.0.1:9001";
+    let addr = "0.0.0.0:9738";
     let listener = TcpListener::bind(&addr)
         .await
         .expect("Error");
